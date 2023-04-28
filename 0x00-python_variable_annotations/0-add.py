@@ -4,10 +4,9 @@
 
 def add(a: float, b: float) -> float:
     """
-    Parameters.
+    Description.
 
     ----------
-    a, b
-    return sum.
+    Take float and return sum.
     """
     return a+b

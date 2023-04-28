@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""add."""
+"""Add."""
 
 
 def add(a: float, b: float) -> float:
     """
-    Description.
+    Parameters.
 
     ----------
-    Take float and return sum.
+    a
+    b
     """
     return a+b

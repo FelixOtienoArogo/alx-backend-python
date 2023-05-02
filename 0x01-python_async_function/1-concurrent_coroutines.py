@@ -10,7 +10,7 @@ from typing import List
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-async def wait_n(n: int, max_delay: int) -> List[float]:
+async def wait_n(n: int, max_delay: int = 10) -> List[float]:
     """
     Description.
 
@@ -23,6 +23,11 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
     i: int = 0
     while (i < n):
         dig = await wait_random(max_delay)
-        out.append(dig)
+        for j in range(len(out)):
+            if dig < out[j]:
+                out.insert(j, dig)
+                break
+        else:
+            out.append(dig)
         i += 1
     return out

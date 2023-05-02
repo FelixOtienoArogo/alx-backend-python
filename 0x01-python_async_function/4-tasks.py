@@ -22,7 +22,9 @@ async def task_wait_n(n: int, max_delay: int = 10) -> List[float]:
     out: List[float] = []
     i: int = 0
     while (i < n):
-        dig = await task_wait_random(max_delay)
+        task = task_wait_random(max_delay)
+        await task
+        dig = task.result()
         for j in range(len(out)):
             if dig < out[j]:
                 out.insert(j, dig)

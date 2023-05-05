@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 '''
-Let's execute multiple coroutines at the same time with async
+The code is nearly identical to wait_n except task_wait_random is being called.
 '''
 
 import asyncio
@@ -15,11 +15,11 @@ async def task_wait_n(n: int, max_delay: int) -> List[float]:
     Call wait_random n times
     '''
 
-    result = []
+    sTasks = []
 
-    delays = [task_wait_random(max_delay) for time in range(n)]
+    tasks = [task_wait_random(max_delay) for time in range(n)]
 
-    for sort in asyncio.as_completed(delays):
-        val = await sort
-        result.append(val)
-    return result
+    for sort in asyncio.as_completed(tasks):
+        value = await sort
+        sTasks.append(value)
+    return sTasks

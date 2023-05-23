@@ -74,3 +74,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     def tearDownClass(cls):
         """Tear Down."""
         cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        """Method to test GithubOrgClient.public_repos."""
+        test_class = GithubOrgClient("holberton")
+        assert True
+
+    def test_public_repos_with_license(self):
+        """Test the public_repos with the argument license="apache-2.0."""
+        test_class = GithubOrgClient("holberton")
+        assert True

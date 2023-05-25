@@ -11,7 +11,9 @@ from urllib.error import HTTPError
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """Test value by GithubOrgClient."""
+    """
+    Test value by GithubOrgClient
+    """
     @parameterized.expand([
         ("google"),
         ("abc"),
@@ -19,7 +21,7 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch("client.get_json", return_value={"payload": True})
     def test_org(self, org, get):
         """
-        Test that GithubOrgClient.org returns the correct value.
+        test that GithubOrgClient.org returns the correct value
         """
         client = GithubOrgClient(org)
         test_return = client.org
@@ -28,7 +30,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
     def test_public_repos_url(self):
         """
-        Method to unit-test GithubOrgClient._public_repos_url.
+        method to unit-test GithubOrgClient._public_repos_url
         """
         with patch.object(GithubOrgClient,
                           "org",
@@ -44,7 +46,7 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch("client.get_json", return_value=[{"name": "holberton"}])
     def test_public_repos(self, mock_get):
         """
-        Test that the list of repos is as expect from the chosen payload.
+        test that the list of repos is as expect from the chosen payload
         """
         with patch.object(GithubOrgClient,
                           "_public_repos_url",
@@ -62,7 +64,7 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     def test_has_license(self, repo, license_key, expected):
         """
-        To unit-test GithubOrgClient.has_license.
+        to unit-test GithubOrgClient.has_license
         """
         test_client = GithubOrgClient("holberton")
         test_return = test_client.has_license(repo, license_key)
@@ -75,13 +77,13 @@ class TestGithubOrgClient(unittest.TestCase):
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """
-    Test the GithubOrgClient.public_repos method in an integration test.
+    test the GithubOrgClient.public_repos method in an integration test
     """
 
     @classmethod
     def setUpClass(cls):
         """
-        Set up.
+        set up
         """
         conf = {"return_value.json.side_effect":
                 [
@@ -95,13 +97,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """
-        Tear Down.
+        tear Down
         """
         cls.get_patcher.stop()
 
     def test_public_repos(self):
         """
-        Method to test GithubOrgClient.public_repos.
+        method to test GithubOrgClient.public_repos
         """
         test_class = GithubOrgClient("holberton")
         self.assertEqual(test_class.org, self.org_payload)
@@ -112,7 +114,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
     def test_public_repos_with_license(self):
         """
-        Test the public_repos with the argument license="apache-2.0.
+        test the public_repos with the argument license="apache-2.0
         """
         test_class = GithubOrgClient("holberton")
 

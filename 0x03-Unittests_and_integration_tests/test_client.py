@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-'''
+"""
 TestGithubOrgClient test
-'''
+"""
 import unittest
 from unittest.mock import patch, PropertyMock
 from parameterized import parameterized, parameterized_class
@@ -11,21 +11,27 @@ from urllib.error import HTTPError
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    '''Test value by GithubOrgClient'''
+    """
+    Test value by GithubOrgClient
+    """
     @parameterized.expand([
         ("google"),
         ("abc"),
     ])
     @patch("client.get_json", return_value={"payload": True})
     def test_org(self, org, get):
-        '''Test that GithubOrgClient.org returns the correct value'''
+        """
+        Test that GithubOrgClient.org returns the correct value
+        """
         client = GithubOrgClient(org)
         test_return = client.org
         self.assertEqual(test_return, get.return_value)
         get.assert_called_once
 
     def test_public_repos_url(self):
-        '''Method to unit-test GithubOrgClient._public_repos_url'''
+        """
+        Method to unit-test GithubOrgClient._public_repos_url
+        """
         with patch.object(GithubOrgClient,
                           "org",
                           new_callable=PropertyMock,
@@ -39,7 +45,9 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch("client.get_json", return_value=[{"name": "holberton"}])
     def test_public_repos(self, mock_get):
-        '''Test that the list of repos is as expect from the chosen payload'''
+        """
+        Test that the list of repos is as expect from the chosen payload
+        """
         with patch.object(GithubOrgClient,
                           "_public_repos_url",
                           new_callable=PropertyMock,
@@ -55,7 +63,9 @@ class TestGithubOrgClient(unittest.TestCase):
         ({"license": {"key": "other_license"}}, "my_license", False),
     ])
     def test_has_license(self, repo, license_key, expected):
-        '''To unit-test GithubOrgClient.has_license'''
+        """
+        To unit-test GithubOrgClient.has_license
+        """
         test_client = GithubOrgClient("holberton")
         test_return = test_client.has_license(repo, license_key)
         self.assertEqual(test_return, expected)
@@ -66,11 +76,15 @@ class TestGithubOrgClient(unittest.TestCase):
     TEST_PAYLOAD
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    '''test the GithubOrgClient.public_repos method in an integration test'''
+    """
+    test the GithubOrgClient.public_repos method in an integration test
+    """
 
     @classmethod
     def setUpClass(cls):
-        '''set up'''
+        """
+        set up
+        """
         conf = {"return_value.json.side_effect":
                 [
                     cls.org_payload, cls.repos_payload,
@@ -82,11 +96,15 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        '''tear Down'''
+        """
+        tear Down
+        """
         cls.get_patcher.stop()
 
     def test_public_repos(self):
-        '''method to test GithubOrgClient.public_repos'''
+        """
+        method to test GithubOrgClient.public_repos
+        """
         test_class = GithubOrgClient("holberton")
         self.assertEqual(test_class.org, self.org_payload)
         self.assertEqual(test_class.repos_payload, self.repos_payload)
@@ -95,7 +113,9 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         self.mock.assert_called()
 
     def test_public_repos_with_license(self):
-        '''test the public_repos with the argument license="apache-2.0'''
+        """
+        test the public_repos with the argument license="apache-2.0
+        """
         test_class = GithubOrgClient("holberton")
 
         self.assertEqual(test_class.public_repos(), self.expected_repos)
